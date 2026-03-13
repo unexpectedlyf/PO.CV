@@ -45,10 +45,8 @@
     <!-- Custom CSS Styles -->
     <style type="text/tailwindcss">
       @layer utilities {
-        .perspective-1000 { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
+        /* keeping perspective if used elsewhere */
+        .perspective-1000 { perspective: 1000px; -webkit-perspective: 1000px; }
       }
       
       html {
@@ -60,15 +58,42 @@
         font-family: 'Inter', sans-serif;
       }
       
-      /* 3D Flip Card Animation Styles */
+      /* 3D Flip Card Animation Styles - Safari Fixes */
+      .flip-card {
+        background-color: transparent;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+      }
+      
       .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
       }
       
       .flip-card:hover .flip-card-inner,
       .flip-card.flipped .flip-card-inner {
         transform: rotateY(180deg);
+        -webkit-transform: rotateY(180deg);
+      }
+      
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden !important;
+        backface-visibility: hidden !important;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+      }
+      
+      .flip-card-back {
+        transform: rotateY(180deg);
+        -webkit-transform: rotateY(180deg);
       }
       
       /* Typewriter Cursor Blink */
@@ -94,7 +119,7 @@
         <a href="#" class="text-xl font-bold tracking-tight text-blue-900 hover:text-blue-600 transition-colors">
           KR.
         </a>
-        <div class="flex gap-6 text-sm font-semibold tracking-wide text-slate-600">
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-sm font-semibold tracking-wide text-slate-600">
           <a href="#about" class="hover:text-blue-600 transition-colors">ABOUT</a>
           <a href="#projects" class="hover:text-blue-600 transition-colors">PROJECTS</a>
           <a href="#skills" class="hover:text-blue-600 transition-colors">SKILLS</a>
@@ -107,9 +132,21 @@
 
     <main class="flex-grow pt-32 pb-16">
       <!-- Hero Section -->
-      <section id="hero" class="max-w-5xl mx-auto px-6 pb-24 pt-10 flex flex-col-reverse md:flex-row items-center gap-12">
-        <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium mb-2">
+      <section id="hero" class="max-w-5xl mx-auto px-6 pb-24 pt-10 flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12">
+        <div class="w-56 h-56 md:w-80 md:h-80 relative flex-shrink-0 mb-8 md:mb-0 mt-4 md:mt-0">
+          <!-- Decorative background elements -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 to-blue-50 rounded-full transform -rotate-6 scale-105"></div>
+          <div class="absolute inset-0 bg-white border border-slate-100 rounded-full overflow-hidden shadow-2xl relative z-10 group">
+            <img src="assets/Img/A0042BD9-7145-4C0F-94E8-6CF1307725B4_1_105_c.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <!-- Placeholder overlay for easy replacement -->
+            <div class="absolute inset-0 bg-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6 text-white text-xs font-semibold tracking-widest uppercase">
+              Profile Photo
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6 md:pr-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium mb-2 z-20">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
@@ -150,18 +187,6 @@
             </a>
           </div>
         </div>
-        
-        <div class="w-64 h-64 md:w-80 md:h-80 relative flex-shrink-0">
-          <!-- Decorative background elements -->
-          <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 to-blue-50 rounded-full transform -rotate-6 scale-105"></div>
-          <div class="absolute inset-0 bg-white border border-slate-100 rounded-full overflow-hidden shadow-2xl relative z-10 group">
-            <img src="assets/Img/A0042BD9-7145-4C0F-94E8-6CF1307725B4_1_105_c.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <!-- Placeholder overlay for easy replacement -->
-            <div class="absolute inset-0 bg-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6 text-white text-xs font-semibold tracking-widest uppercase">
-              Profile Photo
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- About Section -->
@@ -198,7 +223,7 @@
             <div class="flip-card-inner relative w-full h-full text-left transition-transform duration-700 transform-style-3d shadow-xl rounded-2xl group-focus:rotate-y-180">
               
               <!-- Front -->
-              <div class="absolute w-full h-full backface-hidden bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
+              <div class="flip-card-front bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
                 <div class="absolute -right-8 -top-8 w-32 h-32 bg-blue-50 rounded-full blur-2xl opacity-60"></div>
                 <div class="relative z-10">
                   <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
@@ -215,7 +240,7 @@
               </div>
 
               <!-- Back -->
-              <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
+              <div class="flip-card-back bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
                 <div>
                   <h4 class="text-xl font-bold mb-4">Product Contributions</h4>
                   <ul class="space-y-3 text-blue-100 text-sm list-disc list-inside">
@@ -237,7 +262,7 @@
           <div class="flip-card perspective-1000 h-[400px] cursor-pointer group w-full" tabindex="0">
             <div class="flip-card-inner relative w-full h-full text-left transition-transform duration-700 transform-style-3d shadow-xl rounded-2xl group-focus:rotate-y-180">
               <!-- Front -->
-              <div class="absolute w-full h-full backface-hidden bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
+              <div class="flip-card-front bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
                 <div class="absolute -right-8 -top-8 w-32 h-32 bg-blue-50 rounded-full blur-2xl opacity-60"></div>
                 <div class="relative z-10">
                   <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
@@ -254,7 +279,7 @@
                 </div>
               </div>
               <!-- Back -->
-              <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
+              <div class="flip-card-back bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
                 <div>
                   <h4 class="text-xl font-bold mb-4">Technical Impact</h4>
                   <ul class="space-y-3 text-blue-100 text-sm list-disc list-inside">
@@ -274,7 +299,7 @@
           <!-- Project 3: Task Manager Application -->
           <div class="flip-card perspective-1000 h-[400px] cursor-pointer group w-full" tabindex="0">
             <div class="flip-card-inner relative w-full h-full text-left transition-transform duration-700 transform-style-3d shadow-xl rounded-2xl group-focus:rotate-y-180">
-              <div class="absolute w-full h-full backface-hidden bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
+              <div class="flip-card-front bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
                 <div class="absolute -right-8 -top-8 w-32 h-32 bg-blue-50 rounded-full blur-2xl opacity-60"></div>
                 <div class="relative z-10">
                   <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
@@ -290,7 +315,7 @@
                   <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md">Pytest</span>
                 </div>
               </div>
-              <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
+              <div class="flip-card-back bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
                 <div>
                   <h4 class="text-xl font-bold mb-4">Development Scope</h4>
                   <ul class="space-y-3 text-blue-100 text-sm list-disc list-inside">
@@ -310,7 +335,7 @@
           <!-- Project 4: News App -->
           <div class="flip-card perspective-1000 h-[400px] cursor-pointer group w-full" tabindex="0">
             <div class="flip-card-inner relative w-full h-full text-left transition-transform duration-700 transform-style-3d shadow-xl rounded-2xl group-focus:rotate-y-180">
-              <div class="absolute w-full h-full backface-hidden bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
+              <div class="flip-card-front bg-white border border-slate-200 rounded-2xl p-8 flex flex-col justify-between overflow-hidden">
                 <div class="absolute -right-8 -top-8 w-32 h-32 bg-blue-50 rounded-full blur-2xl opacity-60"></div>
                 <div class="relative z-10">
                   <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
@@ -326,7 +351,7 @@
                   <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md">JS</span>
                 </div>
               </div>
-              <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
+              <div class="flip-card-back bg-blue-900 text-white rounded-2xl p-8 flex flex-col justify-between">
                 <div>
                   <h4 class="text-xl font-bold mb-4">Integration Strategy</h4>
                   <ul class="space-y-3 text-blue-100 text-sm list-disc list-inside">
