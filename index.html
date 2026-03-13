@@ -132,18 +132,7 @@
 
     <main class="flex-grow pt-32 pb-16">
       <!-- Hero Section -->
-      <section id="hero" class="max-w-5xl mx-auto px-6 pb-24 pt-10 flex flex-col md:flex-row-reverse items-center gap-4 md:gap-12">
-        <div class="w-56 h-56 md:w-80 md:h-80 relative flex-shrink-0 mb-6 md:mb-0 mt-4 md:mt-0">
-          <!-- Decorative background elements -->
-          <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 to-blue-50 rounded-full transform -rotate-6 scale-105"></div>
-          <div class="absolute inset-0 bg-white border border-slate-100 rounded-full overflow-hidden shadow-2xl relative z-10 group">
-            <img src="assets/Img/A0042BD9-7145-4C0F-94E8-6CF1307725B4_1_105_c.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <!-- Placeholder overlay for easy replacement -->
-            <div class="absolute inset-0 bg-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6 text-white text-xs font-semibold tracking-widest uppercase">
-              Profile Photo
-            </div>
-          </div>
-        </div>
+      <section id="hero" class="max-w-5xl mx-auto px-6 pb-24 pt-10 flex flex-col md:flex-row-reverse items-center justify-center gap-4 md:gap-12 min-h-[70vh]">
 
         <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6 md:pr-8">
           
@@ -184,18 +173,33 @@
 
       <!-- About Section -->
       <section id="about" class="py-20 bg-white border-y border-slate-100">
-        <div class="max-w-4xl mx-auto px-6">
-          <h2 class="text-sm font-bold tracking-widest text-blue-600 uppercase mb-4">About Me</h2>
-          <h3 class="text-3xl font-bold text-slate-900 mb-8">System Design meets Product Strategy.</h3>
+        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center md:items-start gap-12">
           
-          <div class="prose prose-lg text-slate-600">
-            <p class="mb-6 leading-relaxed">
-              I am a high-performing Product Owner (promoted from Technical Support Consultant) with a strong foundation in the Software Development Life Cycle (SDLC) and system design. My core strength lies in translating complex business requirements and raw user feedback into structured, actionable engineering tasks.
-            </p>
-            <p class="leading-relaxed">
-              Having completed a rigorous Software Engineering Bootcamp (ranking 3rd out of 177), I possess the deep technical aptitude—particularly in Python, SQL, RESTful APIs, and Frontend tools—necessary to collaborate seamlessly with development teams and drive high-quality agile product delivery.
-            </p>
+          <!-- Moved Profile Picture -->
+          <div class="w-64 h-64 md:w-80 md:h-80 relative flex-shrink-0">
+            <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 to-blue-50 rounded-full transform -rotate-6 scale-105"></div>
+            <div class="absolute inset-0 bg-white border border-slate-100 rounded-full overflow-hidden shadow-2xl relative z-10 group">
+              <img src="assets/Img/A0042BD9-7145-4C0F-94E8-6CF1307725B4_1_105_c.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6 text-white text-xs font-semibold tracking-widest uppercase">
+                Profile Photo
+              </div>
+            </div>
           </div>
+
+          <div class="flex-1 text-center md:text-left">
+            <h2 class="text-sm font-bold tracking-widest text-blue-600 uppercase mb-4">About Me</h2>
+            <h3 class="text-3xl font-bold text-slate-900 mb-8">System Design meets Product Strategy.</h3>
+            
+            <div class="prose prose-lg text-slate-600">
+              <p class="mb-6 leading-relaxed">
+                I am a high-performing Product Owner (promoted from Technical Support Consultant) with a strong foundation in the Software Development Life Cycle (SDLC) and system design. My core strength lies in translating complex business requirements and raw user feedback into structured, actionable engineering tasks.
+              </p>
+              <p class="leading-relaxed">
+                Having completed a rigorous Software Engineering Bootcamp (ranking 3rd out of 177), I possess the deep technical aptitude—particularly in Python, SQL, RESTful APIs, and Frontend tools—necessary to collaborate seamlessly with development teams and drive high-quality agile product delivery.
+              </p>
+            </div>
+          </div>
+          
         </div>
       </section>
 
